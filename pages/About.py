@@ -47,6 +47,7 @@ try:
         width=180
     )
     
+    
 st.markdown("""
 <div class='info-card'>
 
