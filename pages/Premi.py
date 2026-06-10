@@ -246,7 +246,7 @@ data_ringkasan = {
         f"Rp {manfaat_1:,.0f}",
         f"Rp {manfaat_2:,.0f}",
         f"{bunga_input}%",
-        f"Rp {premi_bersih_tunggal:,.2f}"  # Menampilkan hasil dengan 2 angka di belakang koma
+        f"Rp {total_premi_tunggal:,.2f}"  # Menampilkan hasil dengan 2 angka di belakang koma
     ]
 }
 
