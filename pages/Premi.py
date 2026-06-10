@@ -145,8 +145,8 @@ st.caption("Masukkan semua parameter, tingkat bunga, dan nilai komutasi dari tab
 col_params1, col_params2, col_params3 = st.columns(3)
 
 with col_params1:
-    usia_input = st.number_input("Usia Tertanggung", min_value=0, max_value=100, value=30, step=1)
-    bunga_input = st.number_input("Tingkat Bunga", min_value=0.0, max_value=100.0, value=0.0, step=0.1)
+    usia_input = st.number_input("Usia Tertanggung", min_value=0, max_value=100, value=0, step=1)
+    bunga_input = st.number_input("Tingkat Bunga", min_value=0, max_value=100, value=0, step=1)
 
 with col_params2:
     manfaat_1 = st.number_input("Manfaat Periode Pertama", min_value=0, value=0, step=1000000)
