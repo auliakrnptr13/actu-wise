@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-# 1. Konfigurasi Halaman Utama
 st.set_page_config(
     page_title="ActuWise - Actuarial Dashboard",
     page_icon="🌿",
@@ -9,7 +8,6 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-# 2. Desain Tema Warna Kustom + Menyembunyikan Menu Bawaan (Fokus Menghilangkan Lingkaran Hijau)
 st.markdown("<style>html, body, [data-testid='stAppViewContainer'] { background-color: #FFF0F2 !important; font-family: 'Inter', sans-serif; }</style>", unsafe_allow_html=True)
 st.markdown("<style>[data-testid='stSidebar'] { background-color: #FFFFFF !important; border-right: 1px solid #FAD6DC; }</style>", unsafe_allow_html=True)
 st.markdown("<style>.stMetric { background-color: #E8F1F5 !important; padding: 1.2rem !important; border-radius: 16px !important; border: 1px solid #D0E1E9 !important; }</style>", unsafe_allow_html=True)
@@ -17,16 +15,14 @@ st.markdown("<style>.stMetric { background-color: #E8F1F5 !important; padding: 1
 # BARIS AJAIB INI YANG AKAN MENGHAPUS MENU YANG KAMU LINGKARI HIJAU SECARA PAKSA:
 st.markdown("<style>[data-testid='stSidebarNav'] { display: none !important; }</style>", unsafe_allow_html=True)
 
-# 3. Fungsi Sidebar Navigasi Custom (Tampilan Gambar 1 yang Kamu Mau)
+
 def render_sidebar():
-    # Judul ActuWise berwarna Dusty Pink
     st.sidebar.markdown("<h2 style='color: #D4A5B1; font-weight:700; margin-bottom:0;'>ActuWise</h2>", unsafe_allow_html=True)
     st.sidebar.markdown("<p style='color: #9A9A9A; font-size:0.85rem; margin-top:0;'>Smart Actuarial Platform</p>", unsafe_allow_html=True)
     st.sidebar.markdown("<hr style='margin-top:0; border-color:#FAD6DC;'>", unsafe_allow_html=True)
     
     st.sidebar.markdown("<p style='color: #8A8A8A; font-size:0.8rem; font-weight:600; text-transform:uppercase; margin-bottom:0.8rem;'>MENU NAVIGASI</p>", unsafe_allow_html=True)
     
-    # Jalur Link menu kustom yang rapi pakai Emoji
     st.sidebar.page_link("Home.py", label="Dashboard Utama", icon="📈")
     st.sidebar.page_link("pages/Premi.py", label="Kalkulator Premi", icon="🧮")
     st.sidebar.page_link("pages/Mortalitas.py", label="Analisis Mortalitas", icon="📊")
@@ -35,20 +31,17 @@ def render_sidebar():
     st.sidebar.page_link("pages/About.py", label="Tentang Aplikasi", icon="ℹ️")
     
     st.sidebar.markdown("<hr style='border-color:#FAD6DC; margin-top:3rem;'>", unsafe_allow_html=True)
-    
-    # Identitas Pembuat Aplikasi
+
     st.sidebar.markdown("<p style='font-size: 0.85rem; color: #8A8A8A; margin-bottom: 0;'>Platform Developer:</p>", unsafe_allow_html=True)
     st.sidebar.markdown("<p style='font-weight: 700; color: #D4A5B1; margin-top: 0; font-size: 1.1rem;'>by Aulia Kurnia Putri</p>", unsafe_allow_html=True)
 
 render_sidebar()
 
-# 4. Konten Utama Dashboard
 st.markdown("<h1 style='color: #D4A5B1; font-weight:700; margin-bottom:0;'>ActuWise Analytics</h1>", unsafe_allow_html=True)
 st.write("**Wise Decisions for Your Financial Future**")
 st.caption("Sistem Ringkasan Indikator Performa Utama & Manajemen Risiko Aktuaria")
 st.markdown("<hr style='border-color:#FAD6DC;'>", unsafe_allow_html=True)
 
-# 5. Barisan Kartu Metrik Angka Ringkas (Biru Pastel)
 m1, m2, m3, m4 = st.columns(4)
 with m1:
     st.metric(label="Total Premium Written", value="Rp 4.25 M", delta="14.2% mtd")
@@ -61,7 +54,6 @@ with m4:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# 6. Blok Visualisasi Grafik (Hijau Sage) & Fitur Export Data
 g1, g2 = st.columns(2)
 with g1:
     st.markdown("<h3 style='color: #6E8E85;'>Proyeksi Klaim vs Pendapatan Premi</h3>", unsafe_allow_html=True)
