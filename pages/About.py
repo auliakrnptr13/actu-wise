@@ -46,9 +46,7 @@ try:
         "assets/logo.png",
         width=180
     )
-except:
-    st.info("Logo ActuWise belum tersedia.")
-
+    
 st.markdown("""
 <div class='info-card'>
 
