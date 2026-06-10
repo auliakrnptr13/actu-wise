@@ -1,5 +1,3 @@
-bantu hilangkan rumus matematika mentahnya, trus ganti latarnya perpaduan soft pink dan hijau, trus bantu urutan yang benarnya itu gimana? dan kurangi emoji kalo bisa tampilannya lebih menarik lagi
-
 import streamlit as st
 
 st.set_page_config(
