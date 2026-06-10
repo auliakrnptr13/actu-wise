@@ -68,7 +68,7 @@ with c1:
 with c2:
     st.markdown("""
     <div class='card'>
-        <div class='card-title'>Mortalitas (qx)</div>
+        <div class='card-title'>Mortalitas </div>
         <div class='card-value'>0.0000</div>
     </div>
     """, unsafe_allow_html=True)
