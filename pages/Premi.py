@@ -224,3 +224,39 @@ if st.button("🧮 Hitung Premi Bersih Tunggal", use_container_width=True):
 st.caption(
     "ActuWise • Wise Decisions for Your Financial Future"
 )
+import pandas as pd
+import streamlit as st
+
+# === Bagian ini diletakkan SETELAH tombol hitung ditekan dan hasil_premi sudah didapatkan ===
+# Misalkan variabel hasil perhitungan premimu bernama: premi_bersih_tunggal
+
+# 1. Siapkan data untuk tabel
+data_ringkasan = {
+    "Parameter": [
+        "Usia Tertanggung",
+        "Masa Manfaat Periode I",
+        "Santunan Periode I",
+        "Santunan Periode II (Seumur Hidup)",
+        "Tingkat Bunga",
+        "Premi Bersih Tunggal"
+    ],
+    "Nilai / Keterangan": [
+        f"{usia_input} Tahun",
+        f"{periode_1} Tahun (Usia {usia_input} s.d {usia_input + periode_1})",
+        f"Rp {manfaat_1:,.0f}",
+        f"Rp {manfaat_2:,.0f}",
+        f"{bunga_input}%",
+        f"Rp {premi_bersih_tunggal:,.2f}"  # Menampilkan hasil dengan 2 angka di belakang koma
+    ]
+}
+
+# 2. Ubah menjadi DataFrame Pandas
+df_ringkasan = pd.DataFrame(data_ringkasan)
+
+# 3. Tampilkan di Streamlit dengan format yang menarik
+st.markdown("### 📊 Ringkasan Parameter & Hasil Perhitungan")
+st.dataframe(
+    df_ringkasan, 
+    use_container_width=True,  # Membuat tabel penuh sesuai lebar layar
+    hide_index=True            # Menyembunyikan kolom angka indeks (0, 1, 2..) bawaan pandas
+)
