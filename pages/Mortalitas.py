@@ -1,183 +1,69 @@
-
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import numpy as np
+import plotly.graph_objects as go
 
-st.set_page_config(
-    page_title="Mortality Analytics",
-    page_icon="📊",
-    layout="wide"
-)
+st.set_page_config(page_title="Analisis Mortalitas", layout="wide")
 
-PRIMARY = "#0A3323"
-SECONDARY = "#105666"
-CARD = "#839958"
-BACKGROUND = "#F7F4D5"
-ACCENT = "#D3968C"
-
-st.markdown(f"""
+st.markdown("""
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-
-.stApp {{
-    background-color:{BACKGROUND};
-}}
-
-.metric-card {{
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0px 4px 12px rgba(0,0,0,0.08);
-}}
-
+    html, body, [data-testid='stAppViewContainer'] {
+        background-color: #FFF2F4 !important;
+        font-family: 'Inter', sans-serif;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown(
-    f"<h1 style='color:{PRIMARY};'>📊 Mortality Analytics</h1>",
-    unsafe_allow_html=True
-)
+st.markdown("<h2 style='color: #C38B9B;'><i class='fa-solid fa-cube'></i> Analisis Mortalitas Ruang 3D</h2>", unsafe_allow_html=True)
+st.markdown("<hr style='border-color:#FAD6DC;'>", unsafe_allow_html=True)
 
-st.caption(
-    "Analisis probabilitas kematian dan survival"
-)
+# Input Interaktif dari User
+val_qx = st.number_input("Sesuaikan Faktor Risiko Kematian Dasar (q_x)", min_value=0.001, max_value=1.000, value=0.024, format="%.4f")
 
-st.markdown("---")
+st.write("Pengaturan Dimensi Visualisasi")
+tipe_grafik_3d = st.selectbox("Pilih Model Grafik 3D (Bisa Diputar/Digeser):", ["Grafik Batang Balok 3D", "Grafik Garis Ruang 3D"])
 
-ages = list(range(0,101))
+# Data untuk visualisasi 3D (Sumbu X: Kategori, Sumbu Y: Wilayah, Sumbu Z: Nilai Risiko)
+kategori = ['Rasio Wilayah A', 'Rasio Wilayah B', 'Hasil Koreksi']
+wilayah_index = [1, 2, 3] # Sumbu kedalaman ruang Y
+nilai_risiko = [0.015, 0.032, float(val_qx)]
 
-qx = []
+fig = go.Figure()
 
-for age in ages:
-
-    if age < 1:
-        qx.append(0.025)
-
-    elif age < 10:
-        qx.append(0.0015)
-
-    elif age < 20:
-        qx.append(0.0018)
-
-    elif age < 30:
-        qx.append(0.0022)
-
-    elif age < 40:
-        qx.append(0.0030)
-
-    elif age < 50:
-        qx.append(0.0050)
-
-    elif age < 60:
-        qx.append(0.0085)
-
-    elif age < 70:
-        qx.append(0.0160)
-
-    elif age < 80:
-        qx.append(0.0420)
-
-    elif age < 90:
-        qx.append(0.1050)
-
-    else:
-        qx.append(0.2200)
-
-df = pd.DataFrame({
-    "Usia": ages,
-    "qx": qx
-})
-
-df["px"] = 1 - df["qx"]
-
-usia = st.slider(
-    "Pilih Usia",
-    min_value=0,
-    max_value=100,
-    value=0
-)
-
-qx_value = df[df["Usia"] == usia]["qx"].values[0]
-px_value = df[df["Usia"] == usia]["px"].values[0]
-
-c1, c2 = st.columns(2)
-
-with c1:
-
-    st.markdown(
-        f"""
-        <div class='metric-card'>
-        <h4>Probabilitas Kematian (qx)</h4>
-        <h2>{qx_value:.4f}</h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-with c2:
-
-    st.markdown(
-        f"""
-        <div class='metric-card'>
-        <h4>Probabilitas Bertahan Hidup (px)</h4>
-        <h2>{px_value:.4f}</h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-st.markdown("---")
-
-fig = px.line(
-    df,
-    x="Usia",
-    y="qx",
-    title="Kurva Mortalitas"
-)
-
-fig.update_traces(
-    line_width=4
-)
+if tipe_grafik_3d == "Grafik Batang Balok 3D":
+    for i in range(len(kategori)):
+        fig.add_trace(go.Mesh3d(
+            x=[i, i+0.5, i+0.5, i, i, i+0.5, i+0.5, i],
+            y=[0, 0, 1, 1, 0, 0, 1, 1],
+            z=[0, 0, 0, 0, nilai_risiko[i], nilai_risiko[i], nilai_risiko[i], nilai_risiko[i]],
+            colorbar_title='Skala Risiko',
+            colorscale=[[0, '#9CC2BA'], [1, '#D4A5B1']],
+            intensity=[0, 0, 0, 0, 1, 1, 1, 1],
+            name=kategori[i],
+            showscale=False
+        ))
+else:
+    fig.add_trace(go.Scatter3d(
+        x=kategori,
+        y=wilayah_index,
+        z=nilai_risiko,
+        mode='lines+markers',
+        line=dict(color='#C38B9B', width=6),
+        marker=dict(size=8, color='#6E8E85', opacity=0.9)
+    ))
 
 fig.update_layout(
-    paper_bgcolor=BACKGROUND,
-    plot_bgcolor="white"
+    margin=dict(l=0, r=0, b=0, t=0),
+    scene=dict(
+        xaxis=dict(title='Komponen Data', backgroundcolor="rgb(255, 242, 244)", gridcolor="white", showbackground=True),
+        yaxis=dict(title='Indeks Kedalaman', backgroundcolor="rgb(255, 242, 244)", gridcolor="white", showbackground=True),
+        zaxis=dict(title='Tingkat Risiko (Z)', backgroundcolor="rgb(255, 242, 244)", gridcolor="white", showbackground=True),
+        camera=dict(eye=dict(x=1.5, y=1.5, z=1.2)) # Sudut pandang awal 3D yang estetik
+    ),
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)'
 )
 
-st.plotly_chart(
-    fig,
-    use_container_width=True
-)
-
-with st.expander("📋 Data Mortalitas"):
-
-    st.dataframe(
-        df,
-        use_container_width=True
-    )
-
-st.markdown("### 📌 Interpretasi")
-
-if usia < 30:
-
-    st.success(
-        "Risiko mortalitas relatif rendah."
-    )
-
-elif usia < 60:
-
-    st.info(
-        "Risiko mortalitas mulai meningkat seiring bertambahnya usia."
-    )
-
-else:
-
-    st.warning(
-        "Risiko mortalitas meningkat signifikan pada usia lanjut."
-    )
-    
-st.markdown("---")
-
-st.caption(
-    "ActuWise • Wise Decisions for Your Financial Future"
-)
+# Tampilkan grafik 3D di Streamlit
+st.plotly_chart(fig, use_container_width=True)
