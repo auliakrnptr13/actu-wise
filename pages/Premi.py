@@ -160,13 +160,13 @@ st.markdown("<p style='color: #C38B9B; font-weight: 600; margin-top: 10px;'>📊
 col_data1, col_data2, col_data3 = st.columns(3)
 
 with col_data1:
-    D_x = st.number_input("Komutasi Dₓ", min_value=0.0, value=0.0, format="%.4f")
+    D_x = st.number_input("Komutasi Dₓ", min_value=0.0, value=0.0, format="%.0f")
 
 with col_data2:
-    M_x = st.number_input("Komutasi Mₓ", min_value=0.0, value=0.0, format="%.4f")
+    M_x = st.number_input("Komutasi Mₓ", min_value=0.0, value=0.0, format="%.0f")
 
 with col_data3:
-    M_x_n = st.number_input(f"Komutasi Mₓ₊ₙ (Usia {usia_input + periode_1})", min_value=0.0, value=0.0, format="%.4f")
+    M_x_n = st.number_input(f"Komutasi Mₓ₊ₙ (Usia {usia_input + periode_1})", min_value=0.0, value=0.0, format="%.0f")
     
 # 3. Tombol Eksekusi Perhitungan
 if st.button("🧮 Hitung Premi Bersih Tunggal", use_container_width=True):
