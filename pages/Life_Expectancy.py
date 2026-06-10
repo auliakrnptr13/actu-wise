@@ -1,148 +1,80 @@
-
 import streamlit as st
-import plotly.graph_objects as go
 
+# 1. Konfigurasi Halaman Dasar
 st.set_page_config(
-    page_title="Life Expectancy",
-    page_icon="🌱",
+    page_title="Angka Harapan Hidup - ActuWise", 
     layout="wide"
 )
 
-PRIMARY = "#0A3323"
-SECONDARY = "#105666"
-CARD = "#839958"
-BACKGROUND = "#F7F4D5"
-ACCENT = "#D3968C"
-
-st.markdown(f"""
+# Injeksi CSS Premium & Font Awesome para Icon (Tanpa Emoji)
+st.markdown("""
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-.stApp {{
-    background-color:{BACKGROUND};
-}}
-
-.metric-card {{
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0px 4px 12px rgba(0,0,0,0.08);
-}}
-
+    html, body, [data-testid='stAppViewContainer'] {
+        background-color: #FFF2F4 !important;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* GAYA KARTU HASIL */
+    .result-box {
+        background-color: white; 
+        padding: 25px; 
+        border-radius: 12px; 
+        box-shadow: 0 4px 12px rgba(212, 165, 177, 0.15);
+        margin-top: 20px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# =========================
-# HEADER
-# =========================
-st.markdown(
-    f"<h1 style='color:{PRIMARY};'>🌱 Life Expectancy Analysis</h1>",
-    unsafe_allow_html=True
+# Main Title menggunakan Icon
+st.markdown("<h2 style='color: #C38B9B;'><i class='fa-solid fa-heart-pulse'></i> Analisis Angka Harapan Hidup</h2>", unsafe_allow_html=True)
+st.markdown("<hr style='border-color:#FAD6DC; margin-bottom: 25px;'>", unsafe_allow_html=True)
+
+st.write("##### Parameter Perhitungan Aktuaria (Faktor Risiko Kesehatan):")
+
+# Input Data Utama
+usia_input = st.number_input("Masukkan Usia Responden Saat Ini", value=22, min_value=0, max_value=90)
+
+# 📋 FITUR BARU: Deteksi Kondisi Kesehatan / Riwayat Penyakit
+status_kesehatan = st.radio(
+    "Bagaimana kondisi riwayat medis responden saat ini?", 
+    ["Kondisi Sehat / Prima (Standard Risk)", "Memiliki Riwayat Penyakit"]
 )
 
-st.caption(
-    "Estimasi harapan hidup berdasarkan usia saat ini"
-)
+# Batas ekspektasi umur normal (Rata-rata nasional)
+batas_normal = 78.0
 
-st.markdown("---")
-
-usia = st.number_input(
-    "Masukkan Usia Saat Ini",
-    min_value=0,
-    max_value=100,
-    value=0
-)
-
-harapan_hidup = max(0, 80 - usia)
-
-usia_akhir = usia + harapan_hidup
-
-c1, c2 = st.columns(2)
-
-with c1:
-
-    st.markdown(
-        f"""
-        <div class='metric-card'>
-        <h4>Sisa Harapan Hidup</h4>
-        <h2>{harapan_hidup} Tahun</h2>
-        </div>
-        """,
-        unsafe_allow_html=True
+# Logika Matematika Aktuaria berdasarkan Penyakit
+if status_kesehatan == "Memiliki Riwayat Penyakit":
+    jenis_penyakit = st.selectbox(
+        "Pilih Kategori Penyakit untuk Penyesuaian Koefisien Morbiditas:", 
+        ["Penyakit Ringan / Terkontrol (Hipertensi, Asam Urat, dll)", 
+         "Penyakit Kronis Berat (Diabetes Melitus, Jantung, Ginjal, dll)"]
     )
-
-with c2:
-
-    st.markdown(
-        f"""
-        <div class='metric-card'>
-        <h4>Estimasi Usia Akhir</h4>
-        <h2>{usia_akhir} Tahun</h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-st.markdown("---")
-
-fig = go.Figure()
-
-fig.add_trace(
-    go.Bar(
-        x=["Usia Saat Ini"],
-        y=[usia],
-        name="Saat Ini"
-    )
-)
-
-fig.add_trace(
-    go.Bar(
-        x=["Estimasi Akhir"],
-        y=[usia_akhir],
-        name="Estimasi"
-    )
-)
-
-fig.update_layout(
-    title="Perbandingan Usia Saat Ini dan Estimasi Usia Akhir",
-    paper_bgcolor=BACKGROUND,
-    plot_bgcolor="white",
-    barmode="group"
-)
-
-st.plotly_chart(
-    fig,
-    use_container_width=True
-)
-
-st.markdown("### 📌 Interpretasi")
-
-if usia == 0:
-
-    st.info(
-        "Masukkan usia untuk melihat estimasi harapan hidup."
-    )
-
-elif usia < 30:
-
-    st.success(
-        "Usia masih muda, periode perencanaan keuangan masih sangat panjang."
-    )
-
-elif usia < 50:
-
-    st.info(
-        "Mulai penting mempertimbangkan proteksi dan investasi jangka panjang."
-    )
-
+    
+    if "Ringan" in jenis_penyakit:
+        sisa_harapan = (batas_normal - usia_input) - 5.0  # Penyakit ringan mengurangi 5 tahun
+        keterangan = "Angka harapan hidup mengalami penyesuaian berkurang 5 tahun karena faktor morbiditas risiko sedang."
+        warna_sisi = "#E5BCC6"  # Warna aksen pink sedang
+    else:
+        sisa_harapan = (batas_normal - usia_input) - 12.0 # Penyakit berat mengurangi 12 tahun
+        keterangan = "Peringatan: Angka harapan hidup berkurang 12 tahun akibat paparan risiko komorbiditas tinggi."
+        warna_sisi = "#D4A5B1"  # Warna aksen rose gold pekat
 else:
+    sisa_harapan = batas_normal - usia_input
+    keterangan = "Kondisi tubuh prima (Standard Risk). Proyeksi angka harapan hidup berjalan optimal secara normal."
+    warna_sisi = "#9CC2BA"  # Warna aksen hijau sage soft
 
-    st.warning(
-        "Perencanaan pensiun dan kesehatan menjadi prioritas utama."
-    )
+# Memastikan nilai tidak minus jika usia input sudah melewati batas normal
+sisa_harapan = float(max(0.0, sisa_harapan))
 
-st.markdown("---")
-
-st.caption(
-    "ActuWise • Wise Decisions for Your Financial Future"
-)
+# Tampilan Hasil yang Mewah & Responsif
+st.markdown(f"""
+<div class='result-box' style='border-left: 8px solid {warna_sisi};'>
+    <h4 style='color: #4A5568; margin-top:0;'><i class="fa-solid fa-hourglass-half"></i> Proyeksi Sisa Umur Produktif</h4>
+    <h1 style='color: #C38B9B; margin: 10px 0;'>{sisa_harapan:.1f} Tahun Lagi</h1>
+    <p style='margin:0; color:#6E8E85; font-weight:500;'><i class="fa-solid fa-circle-exclamation"></i> Analisis: {keterangan}</p>
+</div>
+""", unsafe_allow_html=True)
