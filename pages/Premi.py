@@ -150,7 +150,7 @@ with col_params1:
 
 with col_params2:
     manfaat_1 = st.number_input("Manfaat Periode Pertama", min_value=0, value=0, step=1000000)
-    periode_1 = st.number_input("Periode Pertama (Tahun)", min_value=1, value=10, step=1)
+    periode_1 = st.number_input("Periode Pertama (Tahun)", min_value=1, value=0, step=1)
 
 with col_params3:
     manfaat_2 = st.number_input("Manfaat Periode Kedua / Seterusnya", min_value=0, value=0, step=1000000)
