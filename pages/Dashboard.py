@@ -1,4 +1,3 @@
-
 import streamlit as st
 import plotly.graph_objects as go
 
@@ -148,20 +147,23 @@ a, b, c = st.columns(3)
 
 with a:
     st.page_link(
-        "pages/2_Premi.py",
-        label="💰 Premium Calculator"
+        "pages/Premi.py",  # Diubah agar sinkron jika di folder pages tidak pakai angka
+        label="💰 Premium Calculator",
+        use_container_width=True
     )
 
 with b:
     st.page_link(
-        "pages/3_Mortalitas.py",
-        label="📊 Mortality Analytics"
+        "pages/Mortalitas.py",
+        label="📊 Mortality Analytics",
+        use_container_width=True
     )
 
 with c:
     st.page_link(
-        "pages/5_Insurance_Gap.py",
-        label="🛡️ Insurance Gap"
+        "pages/Insurance_Gap.py",
+        label="🛡️ Insurance Gap Analysis",
+        use_container_width=True
     )
 
 st.markdown("---")
