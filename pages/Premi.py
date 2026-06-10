@@ -137,46 +137,37 @@ else:
     st.error(
         "Premi cukup tinggi, pertimbangkan evaluasi kebutuhan proteksi."
     )
-
-st.markdown("---")
-
-
-# =========================================================================
-# TAMBAHAN FITUR: KALKULATOR PREMI MANFAAT BERJENJANG (INPUT MANDIRI TOTAL)
-# =========================================================================
-
+    
 st.markdown("<br><hr style='border-color:#FAD6DC;'>", unsafe_allow_html=True)
 st.markdown("<h3 style='color: #6E8E85;'><i class='fa-solid fa-graduation-cap'></i> Simulasi Premi Manfaat Berjenjang</h3>", unsafe_allow_html=True)
 st.caption("Masukkan semua parameter, tingkat bunga, dan nilai komutasi dari tabel mortalitasmu sendiri.")
 
-# 1. Input Parameter Utama Soal (Bunga & Manfaat diset awal ke 0 atau kosong)
 col_params1, col_params2, col_params3 = st.columns(3)
 
 with col_params1:
-    usia_input = st.number_input("Usia Tertanggung (x)", min_value=0, max_value=100, value=30, step=1)
-    bunga_input = st.number_input("Tingkat Bunga (i) dalam %", min_value=0.0, max_value=100.0, value=0.0, step=0.1)
+    usia_input = st.number_input("Usia Tertanggung", min_value=0, max_value=100, value=30, step=1)
+    bunga_input = st.number_input("Tingkat Bunga", min_value=0.0, max_value=100.0, value=0.0, step=0.1)
 
 with col_params2:
-    manfaat_1 = st.number_input("Manfaat Periode Pertama (Rp)", min_value=0, value=0, step=1000000)
+    manfaat_1 = st.number_input("Manfaat Periode Pertama", min_value=0, value=0, step=1000000)
     periode_1 = st.number_input("Periode Pertama (Tahun)", min_value=1, value=10, step=1)
 
 with col_params3:
-    manfaat_2 = st.number_input("Manfaat Periode Kedua / Seterusnya (Rp)", min_value=0, value=0, step=1000000)
+    manfaat_2 = st.number_input("Manfaat Periode Kedua / Seterusnya", min_value=0, value=0, step=1000000)
 
-st.markdown("<p style='color: #C38B9B; font-weight: 600; margin-top: 10px;'>📊 Nilai Komutasi Tabel Mortalitas (Isi Sendiri):</p>", unsafe_allow_html=True)
+st.markdown("<p style='color: #C38B9B; font-weight: 600; margin-top: 10px;'>📊 Nilai Komutasi Tabel Mortalitas :</p>", unsafe_allow_html=True)
 
-# 2. Input Nilai Komutasi (Diset awal ke 0.0)
 col_data1, col_data2, col_data3 = st.columns(3)
 
 with col_data1:
-    D_x = st.number_input("Nilai D_x (sesuai Usia x)", min_value=0.0, value=0.0, format="%.4f")
+    D_x = st.number_input("Komutasi Dₓ", min_value=0.0, value=0.0, format="%.4f")
 
 with col_data2:
-    M_x = st.number_input("Nilai M_x (sesuai Usia x)", min_value=0.0, value=0.0, format="%.4f")
+    M_x = st.number_input("Komutasi Mₓ", min_value=0.0, value=0.0, format="%.4f")
 
 with col_data3:
-    M_x_n = st.number_input(f"Nilai M_(x+n) (Usia {usia_input + periode_1})", min_value=0.0, value=0.0, format="%.4f")
-
+    M_x_n = st.number_input(f"Komutasi Mₓ₊ₙ (Usia {usia_input + periode_1})", min_value=0.0, value=0.0, format="%.4f")
+    
 # 3. Tombol Eksekusi Perhitungan
 if st.button("🧮 Hitung Premi Bersih Tunggal", use_container_width=True):
     
