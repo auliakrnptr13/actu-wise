@@ -4,7 +4,6 @@ import plotly.graph_objects as go
 
 st.set_page_config(
     page_title="Dashboard",
-    page_icon="📊",
     layout="wide"
 )
 
@@ -46,7 +45,7 @@ st.markdown(f"""
 st.markdown(
     f"""
     <h1 style='color:{PRIMARY};'>
-    📊 Dashboard Overview
+    Dashboard Overview
     </h1>
     """,
     unsafe_allow_html=True
@@ -93,7 +92,7 @@ with c4:
 st.write("")
 st.write("")
 
-st.subheader("📈 Mortality Trend")
+st.subheader("Mortality Trend")
 
 usia = [20, 30, 40, 50, 60, 70, 80]
 
@@ -129,7 +128,7 @@ st.plotly_chart(
     use_container_width=True
 )
 
-st.subheader("📋 Ringkasan Sistem")
+st.subheader("Ringkasan Sistem")
 
 st.info(
     """ActuWise adalah platform aktuaria berbasis web
@@ -142,30 +141,4 @@ dan insurance gap secara interaktif.
 st.write("")
 st.write("")
 
-st.subheader("🚀 Quick Access")
 
-a, b, c = st.columns(3)
-
-with a:
-    st.page_link(
-        "pages/2_Premi.py",
-        label="💰 Premium Calculator"
-    )
-
-with b:
-    st.page_link(
-        "pages/3_Mortalitas.py",
-        label="📊 Mortality Analytics"
-    )
-
-with c:
-    st.page_link(
-        "pages/5_Insurance_Gap.py",
-        label="🛡️ Insurance Gap"
-    )
-
-st.markdown("---")
-
-st.caption(
-    "© 2026 ActuWise • Wise Decisions for Your Financial Future"
-)
