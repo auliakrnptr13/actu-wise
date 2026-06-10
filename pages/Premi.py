@@ -213,10 +213,10 @@ if st.button("🧮 Hitung Premi Bersih Tunggal", use_container_width=True):
         <div class='hasil-box'>
             <h4 style='color: #C38B9B; margin-top:0;'>Hasil Perhitungan Aktuaria:</h4>
             <p style='margin-bottom:5px; color:#4A5568;'><b>Tingkat Bunga Efektif (i):</b> {bunga_input}% (v = {v:.6f})</p>
-            <p style='margin-bottom:5px; color:#4A5568;'><b>Komponen Asuransi Berjangka ({periode_1} Thn Pertama):</b> Rp {premi_berjangka:,.2f}</p>
-            <p style='margin-bottom:5px; color:#4A5568;'><b>Komponen Asuransi Ditunda (Tahun ke-{periode_1 + 1}+):</b> Rp {premi_ditunda:,.2f}</p>
+            <p style='margin-bottom:5px; color:#4A5568;'><b>Komponen Asuransi Berjangka):</b> Rp {premi_berjangka:,.2f}</p>
+            <p style='margin-bottom:5px; color:#4A5568;'><b>Komponen Asuransi Ditunda :</b> Rp {premi_ditunda:,.2f}</p>
             <hr style='border-color:#FAD6DC; margin: 10px 0;'>
-            <h3 style='color: #6E8E85; margin:0;'>Total Premi Bersih Tunggal ($A_x$): Rp {total_premi_tunggal:,.2f}</h3>
+            <h3 style='color: #6E8E85; margin:0;'>Total Premi Bersih Tunggal: Rp {total_premi_tunggal:,.2f}</h3>
         </div>
         """, unsafe_allow_html=True)
         
