@@ -86,4 +86,40 @@ st.markdown("<hr style='border-color:#FAD6DC;'>", unsafe_allow_html=True)
 # CONTAINER METRIK UTAMA
 m1, m2, m3, m4 = st.columns(4)
 with m1:
-    st.metric(label="Total Premium Written", value="
+    st.metric(label="Total Premium Written", value="Rp 4.25 M", delta="14.2% mtd")
+with m2:
+    st.metric(label="Annuity Payout Exposure", value="Rp 1.82 M", delta="-2.1% mtd", delta_color="inverse")
+with m3:
+    st.metric(label="Average Reserve Fund", value="Rp 520 Jt", delta="5.8% mtd")
+with m4:
+    st.metric(label="Active Insured Lives", value="12,450", delta="8.3% mtd")
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# GRIDS UNTUK GRAFIK ANALISIS
+g1, g2 = st.columns(2)
+with g1:
+    st.markdown("<h3 style='color: #6E8E85;'>Proyeksi Klaim vs Pendapatan Premi</h3>", unsafe_allow_html=True)
+    df_line = pd.DataFrame({
+        'Bulan': ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'], 
+        'Pendapatan Premi': [400, 420, 450, 430, 470, 490], 
+        'Klaim Terbayar': [120, 150, 110, 190, 140, 160]
+    }).set_index('Bulan')
+    st.area_chart(df_line, color=["#9CC2BA", "#6E8E85"])
+    
+    csv_data = df_line.to_csv().encode('utf-8')
+    st.download_button(
+        label="📊 Export Data Proyeksi ke Excel (CSV)",
+        data=csv_data,
+        file_name="Proyeksi_Klaim_ActuWise.csv",
+        mime="text/csv",
+        use_container_width=True
+    )
+
+with g2:
+    st.markdown("<h3 style='color: #6E8E85;'>Distribusi Portofolio Produk</h3>", unsafe_allow_html=True)
+    df_bar = pd.DataFrame({
+        'Produk': ['Term Life', 'Whole Life', 'Endowment', 'Annuity'], 
+        'Proporsi (%)': [40, 25, 20, 15]
+    }).set_index('Produk')
+    st.bar_chart(df_bar, color="#9CC2BA")
