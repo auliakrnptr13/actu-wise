@@ -1,20 +1,17 @@
 import streamlit as st
 import plotly.graph_objects as go
 
-# 1. Konfigurasi Halaman Dasar
 st.set_page_config(
-    page_title="ActuWise",
+    page_title="ActuWise - Dashboard",
     page_icon="🌿",
     layout="wide"
 )
 
-# Definisikan tema warna premium (Pink & Sage Green lembut sesuai screenshot kamu)
-PRIMARY = "#C38B9B"      # Rose Gold / Pink Tua
-SECONDARY = "#6E8E85"    # Sage Green Tua
-CARD_BORDER = "#FAD6DC"  # Pink Muda Pembatas
-BACKGROUND = "#FFF2F4"   # Latar belakang pink sangat soft
+PRIMARY = "#C38B9B"      
+SECONDARY = "#6E8E85"    
+BACKGROUND = "#FFF2F4"   
 
-# INJEKSI CSS: Memasukkan Font Awesome untuk Ikon & Mengubah Desain agar Estetik
+# FIX CSS: Membungkus seluruh kode gaya ke dalam tag <style> agar tidak bocor ke layar luar
 st.markdown(f"""
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -25,155 +22,101 @@ st.markdown(f"""
     font-family: 'Inter', sans-serif;
 }}
 
-/* Desain Kartu Indikator Utama */
-.card {{
+/* Gaya Kartu Nilai Ringkasan Atas */
+.metric-card {{
     background: white;
     border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 8px 20px rgba(212, 165, 177, 0.15);
+    border-top: 5px solid {PRIMARY};
+}}
+
+.metric-title {{
+    color: {SECONDARY};
+    font-size: 14px;
+    font-weight: 600;
+}}
+
+.metric-value {{
+    color: {PRIMARY};
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 5px;
+}}
+
+/* Gaya Panel Navigasi Kartu (Seperti Gambar Ekspektasi Nomor 2) */
+.nav-card {{
+    background: white;
+    border-radius: 15px;
     padding: 25px;
     text-align: center;
-    box-shadow: 0px 8px 24px rgba(212, 165, 177, 0.15);
-    border-top: 5px solid {PRIMARY};
-    transition: transform 0.2s;
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.05);
+    border-top: 4px solid #9CC2BA;
+    margin-bottom: 15px;
 }}
-
-.card:hover {{
-    transform: translateY(-3px);
-}}
-
-.card-title {{
-    color: {SECONDARY};
-    font-size: 15px;
-    font-weight: 600;
+.nav-card-title {{
+    color: #4A5568;
+    font-size: 18px;
+    font-weight: 700;
     margin-bottom: 8px;
 }}
-
-.card-value {{
-    color: {PRIMARY};
-    font-size: 28px;
-    font-weight: 700;
-}}
-
-/* Mempercantik tampilan st.page_link agar mirip tombol navigasi premium */
-.stElementContainer button, [data-testid="stPageLink-FormSubmitButton"] {{
-    background-color: white !important;
-    border: 1px solid {CARD_BORDER} !important;
-    border-radius: 12px !important;
-    padding: 10px 15px !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02) !important;
+.nav-card-desc {{
+    color: #A0AEC0;
+    font-size: 13px;
+    margin-bottom: 15px;
 }}
 </style>
 """, unsafe_allow_html=True)
 
-# 2. HEADER UTAMA (Menggunakan Ikon Font Awesome, Bukan Emoji)
+# HEADER UTAMA DENGAN ICON (BEBAS EMOJI MENTAH)
 st.markdown(f"""
 <h1 style='color:{PRIMARY}; font-weight:700;'>
     <i class="fa-solid fa-chart-pie"></i> Dashboard Overview
 </h1>
 """, unsafe_allow_html=True)
-
 st.caption("Wise Decisions for Your Financial Future")
 st.markdown("---")
 
-# 3. KARTU INDIKATOR UTAMA
+# KARTU INDIKATOR ATAS
 c1, c2, c3, c4 = st.columns(4)
-
 with c1:
-    st.markdown(f"""
-    <div class='card'>
-        <div class='card-title'><i class="fa-solid fa-wallet"></i> Premi Estimasi</div>
-        <div class='card-value'>Rp 0</div>
-    </div>
-    """, unsafe_allow_html=True)
-
+    st.markdown("<div class='metric-card'><div class='metric-title'><i class='fa-solid fa-wallet'></i> Premi Estimasi</div><div class='metric-value'>Rp 0</div></div>", unsafe_allow_html=True)
 with c2:
-    st.markdown(f"""
-    <div class='card' style='border-top-color: {SECONDARY};'>
-        <div class='card-title'><i class="fa-solid fa-skull-crossbones"></i> Mortalitas (qx)</div>
-        <div class='card-value'>0.0000</div>
-    </div>
-    """, unsafe_allow_html=True)
-
+    st.markdown(f"<div class='metric-card' style='border-top-color:{SECONDARY};'><div class='metric-title'><i class='fa-solid fa-chart-line'></i> Mortalitas (qx)</div><div class='metric-value'>0.0000</div></div>", unsafe_allow_html=True)
 with c3:
-    st.markdown(f"""
-    <div class='card'>
-        <div class='card-title'><i class="fa-solid fa-heart-pulse"></i> Life Expectancy</div>
-        <div class='card-value'>80 Tahun</div>
-    </div>
-    """, unsafe_allow_html=True)
-
+    st.markdown("<div class='metric-card'><div class='metric-title'><i class='fa-solid fa-heart-pulse'></i> Life Expectancy</div><div class='metric-value'>80 Tahun</div></div>", unsafe_allow_html=True)
 with c4:
-    st.markdown(f"""
-    <div class='card' style='border-top-color: {SECONDARY};'>
-        <div class='card-title'><i class="fa-solid fa-shield-halved"></i> Insurance Gap</div>
-        <div class='card-value'>Rp 0</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(f"<div class='metric-card' style='border-top-color:{SECONDARY};'><div class='metric-title'><i class='fa-solid fa-shield-halved'></i> Insurance Gap</div><div class='metric-value'>Rp 0</div></div>", unsafe_allow_html=True)
 
 st.write("")
-st.write("")
 
-# 4. GRAFIK INTERAKTIF MORTALITAS
-st.markdown(f"<h3 style='color:{PRIMARY};'><i class='fa-solid fa-chart-line'></i> Mortality Trend</h3>", unsafe_allow_html=True)
-
+# GRAFIK TREND MORTALITAS
+st.markdown(f"<h3 style='color:{PRIMARY}; margin-top:20px;'><i class='fa-solid fa-chart-area'></i> Mortality Trend</h3>", unsafe_allow_html=True)
 usia = [20, 30, 40, 50, 60, 70, 80]
 qx = [0.002, 0.003, 0.005, 0.009, 0.016, 0.042, 0.105]
 
 fig = go.Figure()
-fig.add_trace(
-    go.Scatter(
-        x=usia,
-        y=qx,
-        mode="lines+markers",
-        name="qx",
-        line=dict(color=PRIMARY, width=3),
-        marker=dict(color=SECONDARY, size=8)
-    )
-)
-
-fig.update_layout(
-    title="Kurva Mortalitas",
-    font=dict(family="Inter, sans-serif"),
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor="white"
-)
-
+fig.add_trace(go.Scatter(x=usia, y=qx, mode="lines+markers", name="qx", line=dict(color=PRIMARY, width=3), marker=dict(color=SECONDARY, size=8)))
+fig.update_layout(title="Kurva Mortalitas", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor="white")
 st.plotly_chart(fig, use_container_width=True)
 
-# 5. RINGKASAN SISTEM
-st.markdown(f"<h3 style='color:{PRIMARY};'><i class='fa-solid fa-circle-info'></i> Ringkasan Sistem</h3>", unsafe_allow_html=True)
-st.info(
-    """ActuWise adalah platform aktuaria berbasis web yang membantu pengguna melakukan simulasi premi, 
-    analisis mortalitas, life expectancy, dan insurance gap secara interaktif."""
-)
+# PANEL NAVIGASI INTERAKTIF BERBENTUK KARTU (Sesuai Gambar Nomor 2)
+st.markdown(f"<h3 style='color:{PRIMARY}; margin-top:20px;'><i class='fa-solid fa-layer-group'></i> Panel Navigasi Interaktif</h3>", unsafe_allow_html=True)
 
-st.write("")
-st.write("")
+grid_nav = st.columns(3)
 
-# 6. PERBAIKAN QUICK ACCESS (MENYESUAIKAN NAMA FILE DI SCREENSHOT AGAR TIDAK ERROR)
-st.markdown(f"<h3 style='color:{PRIMARY};'><i class='fa-solid fa-bolt'></i> Quick Access</h3>", unsafe_allow_html=True)
+with grid_nav[0]:
+    st.markdown("<div class='nav-card'><div class='nav-card-title'>Kalkulator Premi</div><div class='nav-card-desc'>Perhitungan Tarif Kontribusi Asuransi Jiwa</div></div>", unsafe_allow_html=True)
+    st.page_link("pages/Premi.py", label="Buka Kalkulator Premi", use_container_width=True)
 
-a, b, c = st.columns(3)
+with grid_nav[1]:
+    st.markdown("<div class='nav-card' style='border-top-color:#D4A5B1;'><div class='nav-card-title'>Life Expectancy</div><div class='nav-card-desc'>Analisis Angka Harapan Sisa Usia Komorbid</div></div>", unsafe_allow_html=True)
+    st.page_link("pages/Life_Expectancy.py", label="Buka Life Expectancy", use_container_width=True)
 
-with a:
-    st.page_link(
-        "pages/Premi.py",  # Diperbaiki dari "pages/2_Premi.py" sesuai nama di sidebar menu kamu
-        label="Premium Calculator",
-        icon="✨" # Menggunakan icon default bawaan streamlit yang netral
-    )
-
-with b:
-    st.page_link(
-        "pages/Mortalitas.py", # Diperbaiki dari "pages/3_Mortalitas.py"
-        label="Mortality Analytics",
-        icon="✨"
-    )
-
-with c:
-    st.page_link(
-        "pages/Insurance_Gap.py", # Diperbaiki dari "pages/5_Insurance_Gap.py"
-        label="Insurance Gap Analysis",
-        icon="✨"
-    )
+with grid_nav[2]:
+    st.markdown("<div class='nav-card'><div class='nav-card-title'>Insurance Gap</div><div class='nav-card-desc'>Analisis Celah Defisit Proteksi Finansial</div></div>", unsafe_allow_html=True)
+    st.page_link("pages/Insurance_Gap.py", label="Buka Insurance Gap", use_container_width=True)
 
 st.markdown("---")
 st.caption("© 2026 ActuWise • Wise Decisions for Your Financial Future")
