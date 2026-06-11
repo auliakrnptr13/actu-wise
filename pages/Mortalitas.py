@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -107,7 +106,7 @@ with c1:
     st.markdown(
         f"""
         <div class='metric-card'>
-        <h4>Probabilitas Kematian (qx)</h4>
+        <h4>Probabilitas Kematian </h4>
         <h2>{qx_value:.4f}</h2>
         </div>
         """,
@@ -119,7 +118,7 @@ with c2:
     st.markdown(
         f"""
         <div class='metric-card'>
-        <h4>Probabilitas Bertahan Hidup (px)</h4>
+        <h4>Probabilitas Bertahan Hidup </h4>
         <h2>{px_value:.4f}</h2>
         </div>
         """,
