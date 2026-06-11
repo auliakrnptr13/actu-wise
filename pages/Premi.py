@@ -221,14 +221,9 @@ if st.button("🧮 Hitung Premi Bersih Tunggal", use_container_width=True):
         """, unsafe_allow_html=True)
         
         st.info(f"💡 **Analisis Teoretis:** Perhitungan ini sepenuhnya dinamis menggunakan tingkat bunga suku bunga kustom {bunga_input}% dan nilai fungsi komutasi yang ditentukan langsung dari basis data mortalitas Anda.")
-st.caption(
-    "ActuWise • Wise Decisions for Your Financial Future"
-)
+
 import pandas as pd
 import streamlit as st
-
-# === Bagian ini diletakkan SETELAH tombol hitung ditekan dan hasil_premi sudah didapatkan ===
-# Misalkan variabel hasil perhitungan premimu bernama: premi_bersih_tunggal
 
 # 1. Siapkan data untuk tabel
 data_ringkasan = {
@@ -259,4 +254,7 @@ st.dataframe(
     df_ringkasan, 
     use_container_width=True,  # Membuat tabel penuh sesuai lebar layar
     hide_index=True            # Menyembunyikan kolom angka indeks (0, 1, 2..) bawaan pandas
+)
+st.caption(
+    "ActuWise • Wise Decisions for Your Financial Future"
 )
