@@ -1,12 +1,10 @@
 import streamlit as st
 
-# 1. Konfigurasi Halaman Dasar
 st.set_page_config(
     page_title="Angka Harapan Hidup - ActuWise", 
     layout="wide"
 )
 
-# Injeksi CSS Premium & Font Awesome para Icon (Tanpa Emoji)
 st.markdown("""
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -28,16 +26,13 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Main Title menggunakan Icon
 st.markdown("<h2 style='color: #C38B9B;'><i class='fa-solid fa-heart-pulse'></i> Analisis Angka Harapan Hidup</h2>", unsafe_allow_html=True)
 st.markdown("<hr style='border-color:#FAD6DC; margin-bottom: 25px;'>", unsafe_allow_html=True)
 
 st.write("##### Parameter Perhitungan Aktuaria (Faktor Risiko Kesehatan):")
 
-# Input Data Utama
 usia_input = st.number_input("Masukkan Usia Responden Saat Ini", value=22, min_value=0, max_value=90)
 
-# 📋 FITUR BARU: Deteksi Kondisi Kesehatan / Riwayat Penyakit
 status_kesehatan = st.radio(
     "Bagaimana kondisi riwayat medis responden saat ini?", 
     ["Kondisi Sehat / Prima (Standard Risk)", "Memiliki Riwayat Penyakit"]
@@ -67,10 +62,8 @@ else:
     keterangan = "Kondisi tubuh prima (Standard Risk). Proyeksi angka harapan hidup berjalan optimal secara normal."
     warna_sisi = "#9CC2BA"  # Warna aksen hijau sage soft
 
-# Memastikan nilai tidak minus jika usia input sudah melewati batas normal
 sisa_harapan = float(max(0.0, sisa_harapan))
 
-# Tampilan Hasil yang Mewah & Responsif
 st.markdown(f"""
 <div class='result-box' style='border-left: 8px solid {warna_sisi};'>
     <h4 style='color: #4A5568; margin-top:0;'><i class="fa-solid fa-hourglass-half"></i> Proyeksi Sisa Umur Produktif</h4>
