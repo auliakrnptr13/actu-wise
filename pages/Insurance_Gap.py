@@ -1,10 +1,6 @@
-
 import streamlit as st
 import plotly.graph_objects as go
 
-# =========================
-# PAGE CONFIG
-# =========================
 st.set_page_config(
     page_title="Insurance Gap",
     page_icon="🛡️",
