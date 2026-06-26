@@ -38,10 +38,8 @@ status_kesehatan = st.radio(
     ["Kondisi Sehat / Prima (Standard Risk)", "Memiliki Riwayat Penyakit"]
 )
 
-# Batas ekspektasi umur normal (Rata-rata nasional)
 batas_normal = 78.0
 
-# Logika Matematika Aktuaria berdasarkan Penyakit
 if status_kesehatan == "Memiliki Riwayat Penyakit":
     jenis_penyakit = st.selectbox(
         "Pilih Kategori Penyakit untuk Penyesuaian Koefisien Morbiditas:", 
