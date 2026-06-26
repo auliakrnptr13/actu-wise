@@ -12,7 +12,6 @@ st.markdown("<style>html, body, [data-testid='stAppViewContainer'] { background-
 st.markdown("<style>[data-testid='stSidebar'] { background-color: #FFFFFF !important; border-right: 1px solid #FAD6DC; }</style>", unsafe_allow_html=True)
 st.markdown("<style>.stMetric { background-color: #E8F1F5 !important; padding: 1.2rem !important; border-radius: 16px !important; border: 1px solid #D0E1E9 !important; }</style>", unsafe_allow_html=True)
 
-# BARIS AJAIB INI YANG AKAN MENGHAPUS MENU YANG KAMU LINGKARI HIJAU SECARA PAKSA:
 st.markdown("<style>[data-testid='stSidebarNav'] { display: none !important; }</style>", unsafe_allow_html=True)
 
 
