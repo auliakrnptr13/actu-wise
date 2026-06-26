@@ -168,25 +168,18 @@ with col_data2:
 with col_data3:
     M_x_n = st.number_input(f"Komutasi Mₓ₊ₙ", min_value=0.0, value=0.0, format="%.0f")
     
-# 3. Tombol Eksekusi Perhitungan
 if st.button("🧮 Hitung Premi Bersih Tunggal", use_container_width=True):
     
-    # Validasi agar nilai pembagi (D_x) tidak nol supaya tidak crash
     if D_x > 0:
-        # Mengubah input bunga persen menjadi desimal
+
         i_desimal = bunga_input / 100
-        
-        # Menghitung faktor diskonto v berdasarkan bunga yang diinput sendiri
+
         v = 1 / (1 + i_desimal) if (1 + i_desimal) != 0 else 0
         
-        # 📝 LOGIKA AKTUARIA UTAMA (Komutasi murni menggunakan D_x dan M_x yang kamu input)
-        # Komponen 1: Asuransi Berjangka n Tahun
         premi_berjangka = manfaat_1 * ((M_x - M_x_n) / D_x)
         
-        # Komponen 2: Asuransi Seumur Hidup Ditunda n Tahun
         premi_ditunda = manfaat_2 * (M_x_n / D_x)
         
-        # Total Premi Bersih Tunggal
         total_premi_tunggal = premi_berjangka + premi_ditunda
     else:
         premi_berjangka = 0.0
@@ -194,7 +187,6 @@ if st.button("🧮 Hitung Premi Bersih Tunggal", use_container_width=True):
         total_premi_tunggal = 0.0
         st.warning("⚠️ Mohon isi nilai D_x dengan angka yang lebih besar dari 0 untuk memulai perhitungan.")
 
-    # 4. Tampilkan Hasil Secara Elegan
     if D_x > 0:
         st.markdown("""
         <style>
@@ -225,7 +217,6 @@ if st.button("🧮 Hitung Premi Bersih Tunggal", use_container_width=True):
 import pandas as pd
 import streamlit as st
 
-# 1. Siapkan data untuk tabel
 data_ringkasan = {
     "Parameter": [
         "Usia Tertanggung",
@@ -245,10 +236,8 @@ data_ringkasan = {
     ]
 }
 
-# 2. Ubah menjadi DataFrame Pandas
 df_ringkasan = pd.DataFrame(data_ringkasan)
 
-# 3. Tampilkan di Streamlit dengan format yang menarik
 st.markdown("### 📊 Ringkasan Parameter & Hasil Perhitungan")
 st.dataframe(
     df_ringkasan, 
